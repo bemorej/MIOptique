@@ -7,7 +7,15 @@ void Window :: fibo_go()
 {
 	QString program = "./../test-prog/fibonacci";
 	fibonacci->start(program);
+	//fibo_info();
+	QMessageBox::information(this, "fibonacci", "fibonacci.dat created");
+
 }
+
+//void Window :: fibo_info()
+//{
+//	QMessageBox::information(this, "fibonacci", "fibonacci.dat created");
+//}
 
 Window::Window(QWidget *parent) :
 	QWidget(parent)

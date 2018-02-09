@@ -5,6 +5,7 @@
 #include <QProcess>
 #include <QString>
 #include <QObject>
+#include <QMessageBox>
 
 class QPushButton;
 class Window : public QWidget
@@ -18,6 +19,7 @@ class Window : public QWidget
 	public slots:
 		//void fibo_go(QString program);
 		void fibo_go();
+		//void fibo_info();
 	private:
 		QPushButton *m_button;
 		QPushButton *go;
