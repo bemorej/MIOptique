@@ -4,24 +4,25 @@
 #include <QWidget>
 #include <QProcess>
 #include <QString>
+#include <QObject>
 
 class QPushButton;
 class Window : public QWidget
 {
+	Q_OBJECT
+
 	public:
 		explicit Window(QWidget *parent = 0);
-		//QString program = "./../testprog/fibonacci";
+		//program = "./../testprog/fibonacci";
 		//fibonacci = new QProcess(this);
-	//private slots:
-	//	void fibo_go()
-	//	{
-	//		fibonacci->start(&program);
-	//	}
+	public slots:
+		//void fibo_go(QString program);
+		void fibo_go();
 	private:
 		QPushButton *m_button;
 		QPushButton *go;
 		QProcess *fibonacci;
-		//QString *program;
+		QString *program;
 };
 
 #endif // WINDOW_H
