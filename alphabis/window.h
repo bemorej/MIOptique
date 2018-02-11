@@ -10,8 +10,10 @@ class Window : public QWidget
 		explicit Window(QWidget *parent = 0);
 		public slots:
 			void afficher_window2();
+			void writeintofile();
 	private:
 		QPushButton *afficherwindow2;
+		QPushButton *writeintofiletoto;
 		Window2 *fenetre;
 };
 #endif // WINDOW_H

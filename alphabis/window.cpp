@@ -8,11 +8,23 @@
 #include <QDebug>
 void Window::afficher_window2()
 {
-	Window2 *window = new Window2(this);
+	//Window2 *window = new Window2(this);
 	//window->show();
 	fenetre = new Window2();
 	fenetre->show();
 }
+
+void Window::writeintofile()
+{
+	QString filename="./../ying/toto";
+	QFile file( filename );
+	if ( file.open(QIODevice::ReadWrite) )
+	{
+		QTextStream stream( &file );
+		stream << "something" << endl;
+	}
+}
+
 Window::Window(QWidget *parent) :
 	QWidget(parent)
 {
@@ -20,8 +32,11 @@ Window::Window(QWidget *parent) :
 	int width = 500, height = 200 ;
 	setFixedSize(width, height);
 	afficherwindow2 = new QPushButton("afficherwindow2", this);
+	writeintofiletoto = new QPushButton("Write", this);
 	int wbutton = 80, hbutton = 30;
 	int xbutton = (width-wbutton)/2, ybutton = (height-hbutton)/2;
 	afficherwindow2->setGeometry(xbutton, ybutton, wbutton, hbutton);
+	writeintofiletoto->setGeometry(xbutton+50, ybutton, wbutton, hbutton);
 	QObject::connect(afficherwindow2, SIGNAL(clicked()), this, SLOT(afficher_window2()));
+	QObject::connect(writeintofiletoto, SIGNAL(clicked()), this, SLOT(writeintofile()));
 }

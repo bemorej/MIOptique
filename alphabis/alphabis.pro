@@ -10,3 +10,6 @@ INCLUDEPATH += .
 # Input
 HEADERS += window.h window2.h
 SOURCES += main.cpp window.cpp window2.cpp
+
+QT += widgets
+QT += core
