@@ -11,6 +11,8 @@ void Window :: fibo_go()
 {
 	QString program = "./../test-prog/fibonacci";
 	fibonacci->start(program);
+	//fibonacci->waitForFinished();
+	//QString result = fibonacci->readAllStandardOutput();
 	//fibo_info();
 	QMessageBox::information(this, "fibonacci", "fibonacci.dat created");
 }

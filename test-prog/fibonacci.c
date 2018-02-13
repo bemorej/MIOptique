@@ -11,6 +11,9 @@ void ecrit(char * flnm, int n, const int tt[n], const float xx[n],const float yy
 
 int main(void)
 {
+	printf("test print\n");
+	int test;
+	scanf("test = %d",&test);
 	int n=50;
 	int i=1;
 	float tau, eps;

@@ -6,7 +6,7 @@ CXX = g++
 CFLAGS = -std=c99 -lm -W -Wall -Wextra -pedantic
 
 # sources ---- lignes a editer ---- #
-MAIN = ying.cpp	# << Programme principal
+MAIN = relai_ying.c # << Programme principal
 # --------------------------------- #
 OBJS_MAIN = $(MAIN:.c=.o)
 EXEC = $(MAIN:.c=)

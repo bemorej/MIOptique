@@ -11,94 +11,76 @@
 #include <QLabel>
 #include <QComboBox>
 #include <QGridLayout>
-void Window::afficher_window2()
-{
-	//Window2 *window = new Window2(this);
-	//window->show();
-	fenetre = new Window2();
-	fenetre->show();
-}
 
-void Window::writeintofile()
-{
-	QString filename="./../ying/toto";
-	QFile file( filename );
-	if ( file.open(QIODevice::ReadWrite) )
-	{
-		QTextStream stream( &file );
-		stream << "something" << endl;
-	}
-}
-
-void Window::writeintofile2(QString *text)
-{
-	QString filename="./../ying/toto";
-	QFile file( filename );
-	if ( file.open(QIODevice::WriteOnly) )
-	{
-		QTextStream stream( &file );
-		stream << text << endl;
-		file.close();
-	}
-}
-
-void Window::buttonClicked()
-{
-	const QString text = echoLineEdit -> text();
-	QString filename="./../ying/toto";
-	QFile file( filename );
-	if ( file.open(QIODevice::WriteOnly) )
-	{
-		QTextStream stream( &file );
-		stream << text << endl;
-		file.close();
-	}
-}
-
-void Window::affiche()
-{
-	QString filename="./../ying/toto";
-	QFile file( filename );
-	//QLabel *testLabel= new QLabel;
-
-	QString line;
-	if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
-		QTextStream stream(&file);
-		while (!stream.atEnd()){
-			line.append(stream.readLine()+"\n");
-		}
-		//testLabel->setText(line);
-		label->setText(line);
-	}
-	file.close();
-}
+//void Window::affiche()
+//{
+//	QString filename="./../ying/toto";
+//	QFile file( filename );
+//	//QLabel *testLabel= new QLabel;
+//
+//	QString line;
+//	if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
+//		QTextStream stream(&file);
+//		while (!stream.atEnd()){
+//			line.append(stream.readLine()+"\n");
+//		}
+//		//testLabel->setText(line);
+//		label->setText(line);
+//	}
+//	file.close();
+//}
 
 Window::Window(QWidget *parent) :
 	QWidget(parent)
 {
+	/* Parametre fenetre */
 	// Set size of the window
-	int width = 500, height = 200 ;
+	int width = 1000, height = 600;
 	setFixedSize(width, height);
-	afficherwindow2 = new QPushButton("afficherwindow2", this);
-	writeintofiletoto = new QPushButton("Write", this);
-	exitButton = new QPushButton("Exit", this);
+	//resize(width,height);
+	setWindowTitle(tr("MIOptique - Mon Interface Optique"));
+	/* Parametre bouton */
 	int wbutton = 80, hbutton = 30;
-	int xbutton = (width-wbutton)/2, ybutton = (height-hbutton)/2;
-	//
-	//QLineEdit *edit = new QLineEdit("");
-
+	//int xbutton = (width-wbutton)/2, ybutton = (height-hbutton)/2;
 	
-	afficherwindow2->setGeometry(xbutton, ybutton, wbutton, hbutton);
-	writeintofiletoto->setGeometry(xbutton+50, ybutton, wbutton, hbutton);
+	QGridLayout *grid = new QGridLayout;
+	grid->addWidget(GroupYing(), 0, 0);
+	grid->addWidget(GroupMarjoFat(), 0, 1);
+	setLayout(grid);
+
+	/* Initialisation bouton */
+	//afficherwindow2 = new QPushButton("afficherwindow2", this);
+	//writeintofiletoto = new QPushButton("Write", this);
+	exitButton = new QPushButton("Exit", this);
+	
+	//afficherwindow2->setGeometry(xbutton, ybutton, wbutton, hbutton);
+	//writeintofiletoto->setGeometry(xbutton+50, ybutton, wbutton, hbutton);
 	exitButton->setGeometry(width-wbutton-10, height-hbutton-10, wbutton, hbutton);
 
-	/* */
-	QGroupBox *echoGroup = new QGroupBox(tr("Ying"),this);
 
 
-	QLabel *ying_label = new QLabel("Entrer L#/S#/D# sep -", this);
+	//QObject::connect(afficherwindow2, SIGNAL(clicked()), this, SLOT(afficher_window2()));
+	QObject::connect(exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
+	//QObject::connect(writeintofiletoto, SIGNAL(clicked()), this, SLOT(writeintofile()));
+	//QObject::connect(, SIGNAL(returnPressed()), this, SLOT(affiche()));
+}
 
-	QFile file("./../ying/toto");
+/* Programme Ying */
+QGroupBox *Window::GroupYing()
+{
+	QGroupBox *yingGroup = new QGroupBox(tr("Ying"),this);
+
+	ying_label = new QLabel("Entrer L#/S#/D# sep -", this);
+	goButton  = new QPushButton( "Go",this);
+	relai_goButton  = new QPushButton( "Go terminal",this);
+	ying_process = new QProcess(this);
+
+	echoLineEdit = new QLineEdit(this);
+	echoLineEdit->setPlaceholderText("Placeholder Text");
+	echoLineEdit->setFocus();
+
+	/*  */
+	QFile file("./../prog/ying/toto");
 	QLabel *testLabel= new QLabel;
 
 	QString line;
@@ -111,6 +93,8 @@ Window::Window(QWidget *parent) :
 		testLabel->setText(line);
 	}
 	file.close();
+	/*  */
+
 	//QLabel *echoLabel = new QLabel(tr("Mode:"),this);
 	//QComboBox *echoComboBox = new QComboBox;
 	//echoComboBox->addItem(tr("Normal"));
@@ -118,9 +102,6 @@ Window::Window(QWidget *parent) :
 	//echoComboBox->addItem(tr("PasswordEchoOnEdit"));
 	//echoComboBox->addItem(tr("No Echo"));
 
-	echoLineEdit = new QLineEdit(this);
-	echoLineEdit->setPlaceholderText("Placeholder Text");
-	echoLineEdit->setFocus();
 
 	QString titi;
 
@@ -154,16 +135,124 @@ Window::Window(QWidget *parent) :
 	echoLayout->addWidget(ying_label, 0, 0);
 	echoLayout->addWidget(echoLineEdit, 1, 0);
 	echoLayout->addWidget(writeintofiletoto2, 1, 1);
+	echoLayout->addWidget(goButton, 2, 2);
+	echoLayout->addWidget(relai_goButton, 2, 3);
 	echoLayout->addWidget(testLabel, 2, 1);
-	//echoLayout->addWidget(echoComboBox, 0, 1);
+	yingGroup->setLayout(echoLayout);
 
-	echoGroup->setLayout(echoLayout);
 	/* */
-
-
-	QObject::connect(afficherwindow2, SIGNAL(clicked()), this, SLOT(afficher_window2()));
-	QObject::connect(exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
-	QObject::connect(writeintofiletoto, SIGNAL(clicked()), this, SLOT(writeintofile()));
 	QObject::connect(writeintofiletoto2, SIGNAL(clicked()), this, SLOT(buttonClicked()));
-	//QObject::connect(, SIGNAL(returnPressed()), this, SLOT(affiche()));
+	QObject::connect(goButton, SIGNAL(clicked()), this, SLOT(go_ying()));
+	QObject::connect(relai_goButton, SIGNAL(clicked()), this, SLOT(relai_go_ying()));
+	return yingGroup;
+}
+
+QGroupBox *Window::GroupMarjoFat()
+{
+	QGroupBox *marjofatGroup= new QGroupBox(tr("Marjorie Fatima"),this);
+
+	relai_goButton2 = new QPushButton("Go relai", this);
+	writeintofilemj = new QPushButton("Write par", this);
+	goButtonMJ = new QPushButton("Go", this);
+
+	mjLineEdit = new QLineEdit(this);
+	mjLineEdit->setPlaceholderText("Placeholder Text");
+	mjLineEdit->setFocus();
+
+	QGridLayout *MJLayout = new QGridLayout;
+	MJLayout->addWidget(relai_goButton2, 0, 0);
+	MJLayout->addWidget(mjLineEdit, 1, 0);
+	MJLayout->addWidget(writeintofilemj, 2, 0);
+	MJLayout->addWidget(goButtonMJ, 3, 0);
+	marjofatGroup->setLayout(MJLayout);
+
+	/* */
+	QObject::connect(relai_goButton2, SIGNAL(clicked()), this, SLOT(relai_go_mj()));
+	QObject::connect(writeintofilemj, SIGNAL(clicked()), this, SLOT(buttonClickedmj()));
+	QObject::connect(goButtonMJ, SIGNAL(clicked()), this, SLOT(go_MJ()));
+	return marjofatGroup;
+}
+
+void Window::go_ying()
+{
+	QString program = "./../prog/ying/a.out";
+	ying_process->start(program);
+	//QMessageBox::information(this, "fibonacci", "fibonacci.dat created");
+}
+void Window::go_MJ()
+{
+	QString program = "./../prog/marjofat/marjofat";
+	MJ_process->start(program);
+	QMessageBox::information(this, "fibonacci", "fibonacci.dat created");
+}
+
+void Window::relai_go_ying()
+{
+	QString program2 = "./../prog/ying/relai_ying";
+	relai_ying_process->start(program2);
+	//QMessageBox::information(this, "fibonacci", "fibonacci.dat created");
+}
+
+void Window::relai_go_mj()
+{
+	QString program2 = "./../prog/marjofat/relai_mj";
+	relai_mj_process->start(program2);
+	//QMessageBox::information(this, "fibonacci", "fibonacci.dat created");
+}
+
+void Window::afficher_window2()
+{
+	//Window2 *window = new Window2(this);
+	//window->show();
+	fenetre = new Window2();
+	fenetre->show();
+}
+
+void Window::writeintofile()
+{
+	QString filename="./../prog/ying/toto";
+	QFile file( filename );
+	if ( file.open(QIODevice::ReadWrite) )
+	{
+		QTextStream stream( &file );
+		stream << "something" << endl;
+	}
+}
+
+void Window::writeintofile2(QString *text)
+{
+	QString filename="./../prog/ying/toto";
+	QFile file( filename );
+	if ( file.open(QIODevice::WriteOnly) )
+	{
+		QTextStream stream( &file );
+		stream << text << endl;
+		file.close();
+	}
+}
+
+void Window::buttonClicked()
+{
+	const QString text = echoLineEdit -> text();
+	QString filename="./../prog/ying/toto";
+	QFile file( filename );
+	if ( file.open(QIODevice::WriteOnly) )
+	{
+		QTextStream stream( &file );
+		stream << text << endl;
+		file.close();
+	}
+}
+
+void Window::buttonClickedmj()
+{
+	const QString text = mjLineEdit -> text();
+	QString filename="./../prog/marjofat/par";
+	QFile file( filename );
+	if ( file.open(QIODevice::WriteOnly) )
+	{
+		QTextStream stream( &file );
+		stream << text << endl;
+		file.close();
+	}
 }
