@@ -7,8 +7,8 @@ CFLAGS = -std=c99 -lm -W -Wall -Wextra -pedantic
 
 # sources ---- lignes a editer ---- #
 #MAIN = relai_mj.c # << Programme principal
-#MAIN = marjofat.c # << Programme principal
-MAIN = marjofat_relai.c # << Programme principal
+MAIN = marjofat.c # << Programme principal
+#MAIN = marjofat_relai.c # << Programme principal
 # --------------------------------- #
 OBJS_MAIN = $(MAIN:.c=.o)
 EXEC = $(MAIN:.c=)

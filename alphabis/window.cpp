@@ -79,7 +79,7 @@ QGroupBox *Window::GroupYing()
 	echoLineEdit->setPlaceholderText("Placeholder Text");
 	echoLineEdit->setFocus();
 
-	/*  */
+	/*  Lecture de fichier et affichage via QLabel */
 	QFile file("./../prog/ying/toto");
 	QLabel *testLabel= new QLabel;
 
